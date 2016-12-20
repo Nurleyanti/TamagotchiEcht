@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TamgotchiModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TamgotchiModelStoreContainer">
+    <EntitySet Name="TamagotchiSet" EntityType="TamgotchiModel.Store.TamagotchiSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RuleSet" EntityType="TamgotchiModel.Store.RuleSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RuleTamagotchi" EntityType="TamgotchiModel.Store.RuleTamagotchi" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_RuleTamagotchi_Rule" Association="TamgotchiModel.Store.FK_RuleTamagotchi_Rule">
+      <End Role="Rule" EntitySet="RuleSet" />
+      <End Role="RuleTamagotchi" EntitySet="RuleTamagotchi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RuleTamagotchi_Tamagotchi" Association="TamgotchiModel.Store.FK_RuleTamagotchi_Tamagotchi">
+      <End Role="Tamagotchi" EntitySet="TamagotchiSet" />
+      <End Role="RuleTamagotchi" EntitySet="RuleTamagotchi" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="TamagotchiSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Hunger" Type="int" Nullable="false" />
+    <Property Name="Sleep" Type="int" Nullable="false" />
+    <Property Name="Boredom" Type="int" Nullable="false" />
+    <Property Name="Health" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RuleSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RuleTamagotchi">
+    <Key>
+      <PropertyRef Name="Rule_Id" />
+      <PropertyRef Name="Tamagotchi_Id" />
+    </Key>
+    <Property Name="Rule_Id" Type="int" Nullable="false" />
+    <Property Name="Tamagotchi_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_RuleTamagotchi_Rule">
+    <End Role="Rule" Type="TamgotchiModel.Store.RuleSet" Multiplicity="1" />
+    <End Role="RuleTamagotchi" Type="TamgotchiModel.Store.RuleTamagotchi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rule">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RuleTamagotchi">
+        <PropertyRef Name="Rule_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RuleTamagotchi_Tamagotchi">
+    <End Role="RuleTamagotchi" Type="TamgotchiModel.Store.RuleTamagotchi" Multiplicity="*" />
+    <End Role="Tamagotchi" Type="TamgotchiModel.Store.TamagotchiSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Tamagotchi">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RuleTamagotchi">
+        <PropertyRef Name="Tamagotchi_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TamgotchiModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="TamgotchiModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TamagotchiSet" EntityType="TamgotchiModel.Tamagotchi" />
+          <EntitySet Name="RuleSet" EntityType="TamgotchiModel.Rule" />
+          <AssociationSet Name="RuleTamagotchi" Association="TamgotchiModel.RuleTamagotchi">
+            <End Role="Rule" EntitySet="RuleSet" />
+            <End Role="Tamagotchi" EntitySet="TamagotchiSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Tamagotchi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="Hunger" Type="Int32" Nullable="false" />
+          <Property Name="Sleep" Type="Int32" Nullable="false" />
+          <Property Name="Boredom" Type="Int32" Nullable="false" />
+          <Property Name="Health" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Rule" Relationship="TamgotchiModel.RuleTamagotchi" FromRole="Tamagotchi" ToRole="Rule" />
+        </EntityType>
+        <EntityType Name="Rule">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Tamagotchi" Relationship="TamgotchiModel.RuleTamagotchi" FromRole="Rule" ToRole="Tamagotchi" />
+        </EntityType>
+        <Association Name="RuleTamagotchi">
+          <End Type="TamgotchiModel.Rule" Role="Rule" Multiplicity="*" />
+          <End Type="TamgotchiModel.Tamagotchi" Role="Tamagotchi" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TamgotchiModelStoreContainer" CdmEntityContainer="TamgotchiModelContainer">
+    <EntitySetMapping Name="TamagotchiSet">
+      <EntityTypeMapping TypeName="IsTypeOf(TamgotchiModel.Tamagotchi)">
+        <MappingFragment StoreEntitySet="TamagotchiSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="Hunger" ColumnName="Hunger" />
+          <ScalarProperty Name="Sleep" ColumnName="Sleep" />
+          <ScalarProperty Name="Boredom" ColumnName="Boredom" />
+          <ScalarProperty Name="Health" ColumnName="Health" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RuleSet">
+      <EntityTypeMapping TypeName="IsTypeOf(TamgotchiModel.Rule)">
+        <MappingFragment StoreEntitySet="RuleSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="RuleTamagotchi" TypeName="TamgotchiModel.RuleTamagotchi" StoreEntitySet="RuleTamagotchi">
+      <EndProperty Name="Rule">
+        <ScalarProperty Name="Id" ColumnName="Rule_Id" />
+      </EndProperty>
+      <EndProperty Name="Tamagotchi">
+        <ScalarProperty Name="Id" ColumnName="Tamagotchi_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

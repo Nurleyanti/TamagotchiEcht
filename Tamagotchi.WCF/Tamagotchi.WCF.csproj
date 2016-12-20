@@ -70,6 +70,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -90,6 +91,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Service1.svc" />
+    <Content Include="TamgotchiModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TamgotchiModel.edmx</DependentUpon>
+      <LastGenOutput>TamgotchiModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="TamgotchiModel.edmx.sql" />
+    <Content Include="TamgotchiModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TamgotchiModel.edmx</DependentUpon>
+      <LastGenOutput>TamgotchiModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +110,21 @@
     </Compile>
     <Compile Include="IService1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TamgotchiModel.Context.cs">
+      <DependentUpon>TamgotchiModel.Context.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="TamgotchiModel.cs">
+      <DependentUpon>TamgotchiModel.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="TamgotchiModel.Designer.cs">
+      <DependentUpon>TamgotchiModel.edmx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -106,6 +133,13 @@
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="TamgotchiModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TamgotchiModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="TamgotchiModel.edmx.diagram">
+      <DependentUpon>TamgotchiModel.edmx</DependentUpon>
     </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
